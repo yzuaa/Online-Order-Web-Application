@@ -1,0 +1,19 @@
+spring:
+  jackson:
+    default-property-inclusion: non_null
+    property-naming-strategy: SNAKE_CASE
+  datasource:
+#    DATABASE_USERNAME这些是环境变量 冒号后的是default值 放在AWS里运行时就不是这些 AWS里有一个专门写的地方 不泄露密码
+    url: jdbc:postgresql://${DATABASE_URL:localhost}:5432/onlineorder
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:secret}
+    driver-1class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: ${INIT_DB:always}
+      schema-locations: "classpath:database-init.sql"
+
+logging:
+  level:
+    org.apache.coyote.http11.Http11InputBuffer: DEBUG # Incoming HTTP requests
+    org.springframework.jdbc.core: DEBUG # SQL
